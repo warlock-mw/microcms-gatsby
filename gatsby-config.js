@@ -1,8 +1,12 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Gatsby + MicroCMS`,
+    description: `Create site by gatsby and MicroCMS.`,
+    author: `warlock`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -27,8 +31,24 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    {
+      resolve: 'gatsby-source-microcms',
+      options: {
+        apiKey: `${process.env.MICROCMS_API_KEY}`,
+        serviceId: `${process.env.MICROCMS_SERVICE_ID}`,
+        endpoint: 'post',
+        type: 'post',
+      }
+    },
+    `gatsby-plugin-sass`,
+    {
+      resolve: 'gatsby-source-microcms',
+      options: {
+        apiKey: `${process.env.MICROCMS_API_KEY}`,
+        serviceId: `${process.env.MICROCMS_SERVICE_ID}`,
+        endpoint: 'fix-page',
+        type: 'fix-page',
+      }
+    }
   ],
 }
